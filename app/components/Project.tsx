@@ -4,7 +4,15 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-const projects = [
+// Definisi type untuk project
+interface Project {
+  title: string;
+  description: string;
+  images: string[];
+  github: string;
+}
+
+const projects: Project[] = [
   {
     title: "QuakeRangers!",
     description: "An educational website for children under 12 to raise awareness about earthquakes, featuring interactive courses and quizzes on earthquake science and preparedness.",
@@ -49,7 +57,15 @@ const projects = [
   }
 ];
 
-const ProjectCard = ({ title, description, images, github, onClick }) => {
+interface ProjectCardProps {
+  title: string;
+  description: string;
+  images: string[];
+  github: string;
+  onClick: () => void;
+}
+
+const ProjectCard = ({ title, description, images, github, onClick }: ProjectCardProps) => {
   const [currentImage, setCurrentImage] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -85,7 +101,12 @@ const ProjectCard = ({ title, description, images, github, onClick }) => {
   );
 };
 
-const Modal = ({ project, onClose }) => {
+interface ModalProps {
+  project: Project;
+  onClose: () => void;
+}
+
+const Modal = ({ project, onClose }: ModalProps) => {
   const [currentImage, setCurrentImage] = useState(0);
 
   const nextImage = () => {
@@ -144,7 +165,7 @@ const Modal = ({ project, onClose }) => {
 };
 
 const Projects = () => {
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
     <section id="projects" className="py-10 px-6 bg-dark">
